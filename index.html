@@ -20,6 +20,7 @@
         body {
             font-family: 'Open Sans', sans-serif;
             background-color: #fcfcfc;
+            overflow-x: hidden;
         }
 
         h1, h2, h3, .navbar-brand {
@@ -38,11 +39,6 @@
         .navbar-brand img {
             object-fit: cover;
             border-radius: 50%;
-        }
-
-        .navbar-brand:hover .brand-text {
-            color: #ffc107;
-            transition: 0.3s ease;
         }
 
         /* Hero Carousel Section */
@@ -78,54 +74,103 @@
 
         .btn-brand:hover {
             background: #e64500;
+            color: white;
             transform: translateY(-2px);
         }
 
-        /* Ride & Review Cards */
+        /* Ride Cards & Filter Styles */
         .ride-card {
             border: none;
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            transition: 0.3s;
+            transition: 0.4s ease;
             background: #fff;
             border-bottom: 5px solid var(--brand-orange);
         }
 
         .ride-img {
-            height: 200px;
+            height: 220px;
             width: 100%;
             object-fit: cover;
+            transition: transform 0.5s ease;
         }
 
-        .card-content {
-            padding: 20px;
+        .ride-card:hover .ride-img {
+            transform: scale(1.1);
         }
 
-        .map-icon-box {
-            height: 60px;
-            width: 60px;
-            background: rgba(255, 77, 0, 0.1);
-            color: var(--brand-orange);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            margin-bottom: 20px;
-        }
-
-        /* Contact Section */
-        .contact-box {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        .overflow-hidden {
             overflow: hidden;
         }
 
-        .contact-info-panel {
-            background: var(--brand-orange);
+        .filter-btn.active {
+            background-color: var(--brand-orange) !important;
+            border-color: var(--brand-orange) !important;
+            color: white !important;
+            box-shadow: 0 4px 15px rgba(255, 77, 0, 0.3);
+        }
+
+        .ride-item {
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        /* INNOVATIVE PARALLAX & GLASSMORPHISM */
+        .parallax-wrap {
+            position: relative;
+            background-image: url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1920&q=80');
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            padding: 100px 0;
+        }
+
+        .parallax-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(10, 25, 47, 0.92) 0%, rgba(5, 12, 22, 0.85) 100%);
+            z-index: 1;
+        }
+
+        .parallax-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             color: white;
-            padding: 40px;
+            border-radius: 20px;
+            transition: 0.4s;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-5px);
+        }
+
+        .glass-input {
+            background: rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            color: white !important;
+        }
+
+        .glass-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .floating-icon {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
         }
 
         /* Footer Section */
@@ -157,7 +202,7 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background: rgba(0,0,0,0.7); backdrop-filter: blur(10px);">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="#" style="font-family: 'Cinzel', serif;">
                 <img src="./uploads/shivshakti.jpeg" alt="Logo" width="40" height="40" class="d-inline-block align-top me-2 border border-warning">
@@ -169,6 +214,7 @@
             <div class="collapse navbar-collapse" id="nav">
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item"><a class="nav-link" href="#rides">Completed Rides</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#reviews">Reviews</a></li>
                     <li class="nav-item ms-lg-4">
                         <a href="tel:8140258451" class="btn btn-brand">
                             <i class="fa fa-phone me-2"></i>Call Now
@@ -183,115 +229,125 @@
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img src="./uploads/charlottegovaert-kia-5580003_1280.jpg" alt="Luxury Travel">
-                <div class="carousel-caption">
-                    <h1 class="display-3">Your Journey Starts Here</h1>
-                    <p class="lead mb-4">Luxury 7-Seater Kia Carens for Intercity & Local Travel.</p>
+                <div class="carousel-caption text-start">
+                    <h1 class="display-2">Your Journey Starts Here</h1>
+                    <p class="lead mb-4 fs-3">Luxury 7-Seater Kia Carens for Intercity & Local Travel.</p>
+                    <a href="#contact" class="btn btn-brand btn-lg">Book My Ride</a>
                 </div>
             </div>
             <div class="carousel-item">
                 <img src="./uploads/hans-backpacks-1260831_1920.jpg" alt="Backpack Trip">
                 <div class="carousel-caption">
-                    <h1 class="display-3">Safe. Punctual. Reliable.</h1>
-                    <p class="lead mb-4">Deep Patel's Shiv Shakti Tours - Gujarat's Trusted Travel Partner.</p>
+                    <h1 class="display-2">Safe. Punctual. Reliable.</h1>
+                    <p class="lead mb-4 fs-3">Gujarat's Trusted Travel Partner - Deep Patel.</p>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Interactive Completed Rides Section -->
     <section id="rides" class="section-padding">
         <div class="container">
-            <h2 class="text-center mb-2">Our Journey Across India</h2>
-            <p class="text-center text-muted mb-5">Proudly completed 500+ safe trips to every corner of the country.</p>
-            <div class="row g-4">
-                <div class="col-md-4">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold display-5">Our Journey Across India</h2>
+                <p class="text-muted fs-5">500+ safe trips completed. Select a category to see our expertise.</p>
+                
+                <div class="mt-4" id="ride-filters">
+                    <button class="btn btn-outline-dark active filter-btn px-4 rounded-pill m-1" onclick="filterRides('all')">All Trips</button>
+                    <button class="btn btn-outline-dark filter-btn px-4 rounded-pill m-1" onclick="filterRides('nature')">Nature & Hills</button>
+                    <button class="btn btn-outline-dark filter-btn px-4 rounded-pill m-1" onclick="filterRides('religious')">Religious</button>
+                    <button class="btn btn-outline-dark filter-btn px-4 rounded-pill m-1" onclick="filterRides('city')">City Tours</button>
+                </div>
+            </div>
+
+            <div class="row g-4" id="rides-grid">
+                <!-- Cards -->
+                <div class="col-md-4 ride-item city">
                     <div class="card ride-card h-100 shadow-sm">
-                        <img src="./uploads/Rajasthan.jpg" class="card-img-top ride-img" alt="Udaipur Trip">
+                        <div class="overflow-hidden"><img src="./uploads/Rajasthan.jpg" class="ride-img" alt="Udaipur"></div>
                         <div class="card-content">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <h5 class="fw-bold mb-0">Gujarat to Udaipur</h5>
                                 <span class="badge bg-success">Completed</span>
                             </div>
-                            <p class="text-muted small mb-2"><i class="fa fa-route me-1"></i> 450 KM | Kia Carens</p>
+                            <p class="text-muted small"><i class="fa fa-route me-1"></i> 450 KM | Kia Carens</p>
                             <hr>
-                            <p class="text-secondary fst-italic small">"Luxury travel to the City of Lakes. The car was very comfortable."</p>
-                            <div class="text-warning">
-                                <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
-                            </div>
+                            <p class="text-secondary small italic">"Luxury travel to the City of Lakes. Perfect for families."</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+
+                <div class="col-md-4 ride-item nature">
                     <div class="card ride-card h-100 shadow-sm">
-                        <img src="./uploads/saputara.jpg" class="card-img-top ride-img" alt="Saputara Trip">
+                        <div class="overflow-hidden"><img src="./uploads/saputara.jpg" class="ride-img" alt="Saputara"></div>
                         <div class="card-content">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <h5 class="fw-bold mb-0">Surat to Saputara</h5>
                                 <span class="badge bg-success">Completed</span>
                             </div>
-                            <p class="text-muted small mb-2"><i class="fa fa-mountain-sun me-1"></i> 160 KM | Kia Carens</p>
+                            <p class="text-muted small"><i class="fa fa-mountain-sun me-1"></i> 160 KM | Kia Carens</p>
                             <hr>
-                            <p class="text-secondary fst-italic small">"Highly recommended for family trips. The 7-seater was perfect for us."</p>
-                            <div class="text-warning small"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
+                            <p class="text-secondary small italic">"The hill station drive was smooth and scenic."</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+
+                <div class="col-md-4 ride-item religious">
                     <div class="card ride-card h-100 shadow-sm">
-                        <img src="./uploads/statue.jpg" class="card-img-top ride-img" alt="Statue of Unity">
-                        <div class="card-content">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <h5 class="fw-bold mb-0">Gujarat to Statue of Unity</h5>
-                                <span class="badge bg-success">Completed</span>
-                            </div>
-                            <p class="text-muted small mb-2"><i class="fa fa-monument me-1"></i> 220 KM | SUV</p>
-                            <hr>
-                            <p class="text-secondary fst-italic small">"Punctual service and Deep knew all the best local spots for food!"</p>
-                            <div class="text-warning small"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card ride-card h-100 shadow-sm">
-                        <img src="./uploads/mumbai.png" class="card-img-top ride-img" alt="Mumbai Trip">
-                        <div class="card-content">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <h5 class="fw-bold mb-0">Navsari to Mumbai</h5>
-                                <span class="badge bg-success">Completed</span>
-                            </div>
-                            <p class="text-muted small mb-2"><i class="fa fa-plane-departure me-1"></i> 240 KM | Sedan</p>
-                            <hr>
-                            <p class="text-secondary fst-italic small">"Always on time. Very professional service for airport transfers."</p>
-                            <div class="text-warning small"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-stroke"></i></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card ride-card h-100 shadow-sm">
-                        <img src="./uploads/somnath.jpg" class="card-img-top ride-img" alt="Somnath Trip">
+                        <div class="overflow-hidden"><img src="./uploads/somnath.jpg" class="ride-img" alt="Somnath"></div>
                         <div class="card-content">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <h5 class="fw-bold mb-0">Somnath & Dwarka</h5>
                                 <span class="badge bg-success">Completed</span>
                             </div>
-                            <p class="text-muted small mb-2"><i class="fa fa-om me-1"></i> 550 KM | Kia Carens</p>
+                            <p class="text-muted small"><i class="fa fa-om me-1"></i> 550 KM | SUV</p>
                             <hr>
-                            <p class="text-secondary fst-italic small">"The perfect religious tour package. Deep helped us with everything."</p>
-                            <div class="text-warning small"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
+                            <p class="text-secondary small italic">"A peaceful spiritual journey across Saurashtra."</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+
+                <div class="col-md-4 ride-item nature">
                     <div class="card ride-card h-100 shadow-sm">
-                        <img src="./uploads/goa.avif" class="card-img-top ride-img" alt="Goa Trip">
+                        <div class="overflow-hidden"><img src="https://www.india-tours.com/images/festivals/rann-utsav/runn-utsav.jpg" class="ride-img" alt="Kutch"></div>
                         <div class="card-content">
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <h5 class="fw-bold mb-0">Gujarat to Goa</h5>
+                                <h5 class="fw-bold mb-0">Navsari to Kutch</h5>
                                 <span class="badge bg-success">Completed</span>
                             </div>
-                            <p class="text-muted small mb-2"><i class="fa fa-umbrella-beach me-1"></i> 980 KM | SUV</p>
+                            <p class="text-muted small"><i class="fa fa-sun me-1"></i> 650 KM | Kia Carens</p>
                             <hr>
-                            <p class="text-secondary fst-italic small">"A dream road trip to Goa! The car was equipped with everything."</p>
-                            <div class="text-warning small"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
+                            <p class="text-secondary small italic">"Witnessing the White Desert was a lifetime experience."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 ride-item city">
+                    <div class="card ride-card h-100 shadow-sm">
+                        <div class="overflow-hidden"><img src="./uploads/statue.jpg" class="ride-img" alt="SOU"></div>
+                        <div class="card-content">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h5 class="fw-bold mb-0">Gujarat to SOU</h5>
+                                <span class="badge bg-success">Completed</span>
+                            </div>
+                            <p class="text-muted small"><i class="fa fa-monument me-1"></i> 220 KM | SUV</p>
+                            <hr>
+                            <p class="text-secondary small italic">"Deep knows all the shortcuts and best local food spots!"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 ride-item nature">
+                    <div class="card ride-card h-100 shadow-sm">
+                        <div class="overflow-hidden"><img src="https://travelwith.in/wp-content/uploads/2023/09/gir-national-park-male-lion-jeep-safari-travelwith.jpg" class="ride-img" alt="Gir"></div>
+                        <div class="card-content">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h5 class="fw-bold mb-0">Surat to Sasan Gir</h5>
+                                <span class="badge bg-success">Completed</span>
+                            </div>
+                            <p class="text-muted small"><i class="fa fa-paw me-1"></i> 520 KM | SUV</p>
+                            <hr>
+                            <p class="text-secondary small italic">"The 7-seater was perfect for our wildlife photography group."</p>
                         </div>
                     </div>
                 </div>
@@ -299,195 +355,171 @@
         </div>
     </section>
 
-    <section id="reviews" class="section-padding" style="background-color: #f8f9fa;">
-        <div class="container">
-            <h2 class="text-center fw-bold mb-2">Happy Customers</h2>
-            <p class="text-center text-muted mb-5">Real experiences from travelers who trusted Shiv Shakti Tours.</p>
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-3">
-                    <div class="card h-100 border-0 shadow-sm p-4" style="border-radius: 15px;">
-                        <div class="text-warning mb-3"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
-                        <p class="text-secondary small italic">"Excellent experience with Shiv Shakti Tours. Booked a trip from Navsari to Statue of Unity. Top-notch!"</p>
-                        <div class="d-flex align-items-center mt-auto pt-3">
-                            <div class="bg-orange rounded-circle me-3 text-white d-flex align-items-center justify-content-center" style="width: 45px; height: 45px; background-color: #ff4d00;">MP</div>
-                            <div>
-                                <h6 class="mb-0 fw-bold">Minesh Patel</h6>
-                                <small class="text-muted">Verified Traveler</small>
-                            </div>
+    <!-- Parallax Wrapper for Dynamic Feedback & Contact -->
+    <div class="parallax-wrap">
+        <div class="parallax-overlay"></div>
+        <div class="parallax-content container">
+            
+            <!-- Dynamic Reviews -->
+            <section id="reviews" class="mb-5 pb-5">
+                <h2 class="text-center fw-bold mb-2 text-white">Traveler Experiences</h2>
+                <p class="text-center text-white-50 mb-5 fs-5">Real feedback from our happy passengers.</p>
+                
+                <div class="row g-5">
+                    <div class="col-lg-4">
+                        <div class="card glass-card p-4 h-100">
+                            <h4 class="fw-bold mb-4">Post a Review</h4>
+                            <form id="review-form">
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold">Your Name</label>
+                                    <input type="text" id="rev_name" class="form-control glass-input py-2" placeholder="Full Name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold">Rating</label>
+                                    <select id="rev_rating" class="form-select glass-input py-2">
+                                        <option value="5">⭐⭐⭐⭐⭐ (Excellent)</option>
+                                        <option value="4">⭐⭐⭐⭐ (Very Good)</option>
+                                        <option value="3">⭐⭐⭐ (Good)</option>
+                                        <option value="2">⭐⭐ (Average)</option>
+                                        <option value="1">⭐ (Poor)</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold">Share Experience</label>
+                                    <textarea id="rev_text" class="form-control glass-input" rows="4" placeholder="How was your trip with Shiv Shakti Tours?" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-brand w-100 fw-bold py-3 mt-2 shadow">Post Review</button>
+                            </form>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="card h-100 border-0 shadow-sm p-4" style="border-radius: 15px;">
-                        <div class="text-warning mb-3"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
-                        <p class="text-secondary small italic">"Professional service for Udaipur. Punctual, safe driving, and clean vehicle. Best in Gujarat."</p>
-                        <div class="d-flex align-items-center mt-auto pt-3">
-                            <div class="bg-orange rounded-circle me-3 text-white d-flex align-items-center justify-content-center" style="width: 45px; height: 45px; background-color: #ff4d00;">AP</div>
-                            <div>
-                                <h6 class="mb-0 fw-bold">Aaran Patel</h6>
-                                <small class="text-muted">Verified Traveler</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="card h-100 border-0 shadow-sm p-4" style="border-radius: 15px;">
-                        <div class="text-warning mb-3"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
-                        <p class="text-secondary small italic">"Reliable and affordable for late-night Mumbai Airport drop. Stress-free and on time."</p>
-                        <div class="d-flex align-items-center mt-auto pt-3">
-                            <div class="bg-orange rounded-circle me-3 text-white d-flex align-items-center justify-content-center" style="width: 45px; height: 45px; background-color: #ff4d00;">MP</div>
-                            <div>
-                                <h6 class="mb-0 fw-bold">Mayank Patel</h6>
-                                <small class="text-muted">Verified Traveler</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="card h-100 border-0 shadow-sm p-4" style="border-radius: 15px;">
-                        <div class="text-warning mb-3"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
-                        <p class="text-secondary small italic">"Hired for a wedding event. Polite drivers and perfect coordination. Will book again."</p>
-                        <div class="d-flex align-items-center mt-auto pt-3">
-                            <div class="bg-orange rounded-circle me-3 text-white d-flex align-items-center justify-content-center" style="width: 45px; height: 45px; background-color: #ff4d00;">SP</div>
-                            <div>
-                                <h6 class="mb-0 fw-bold">Shivam Patel</h6>
-                                <small class="text-muted">Verified Traveler</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section id="contact" class="section-padding bg-white">
-        <div class="container">
-            <h2 class="text-center section-title mb-5">Get in Touch</h2>
-            <div class="contact-box row g-0 shadow-lg rounded-4 overflow-hidden">
-                <div class="col-lg-5 contact-info-panel p-5">
-                    <h3 class="fw-bold mb-4">Shiv Shakti Tours</h3>
-                    <p class="mb-5 opacity-90">Premium 7-seater Kia Carens and SUV services across India. Your safety is our priority.</p>
-                    <div class="space-y-4">
-                        <div class="d-flex align-items-center mb-4">
-                            <div class="bg-white rounded-circle me-3" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 2px solid #fff;">
-                                <img src="./uploads/deep.png" alt="Call Icon" style="width: 100%; height: 100%; object-fit: cover;">
-                            </div>
-                            <div>
-                                <p class="mb-0 small opacity-75 text-white">Call or WhatsApp</p>
-                                <h5 class="mb-0 fw-bold text-white">+91 8140258451</h5>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center mb-4">
-                            <div class="bg-white rounded-circle me-3" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 2px solid #fff;">
-                                <img src="./uploads/emaillogo.png" alt="Email Logo" style="width: 70%; height: 70%; object-fit: contain;">
-                            </div>
-                            <div>
-                                <p class="mb-0 small opacity-75 text-white">Official Email</p>
-                                <h5 class="mb-0 fw-bold text-white">deepatel2599@gmail.com</h5>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center mb-4">
-                            <div class="bg-white rounded-circle me-3" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 2px solid #fff;">
-                                <img src="./uploads/indialogo.png" alt="India Logo" style="width: 100%; height: 100%; object-fit: cover;">
-                            </div>
-                            <div>
-                                <p class="mb-0 small opacity-75 text-white">Service Area</p>
-                                <h5 class="mb-0 fw-bold text-white">All Over India</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="my-5 bg-white opacity-25">
-                    <div class="working-hours">
-                        <h6 class="fw-bold text-uppercase small mb-3">Operating Status</h6>
-                        <div class="d-flex justify-content-between mb-2">
-                            <span>All India Permits:</span>
-                            <span class="badge bg-white text-dark">Verified ✅</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-2">
-                            <span>Customer Support:</span>
-                            <span>24/7 Available</span>
+                    <div class="col-lg-8">
+                        <div id="reviews-container" class="row g-4">
+                            <!-- JS Inject -->
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-7 p-5 bg-white">
-                    <h4 class="fw-bold text-dark mb-4">Plan Your Journey</h4>
-                    <form id="whatsapp-form" class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label small fw-bold">Full Name</label>
-                            <input type="text" id="wa_name" class="form-control border-0 bg-light py-3" placeholder="Enter your name" required>
+            </section>
+
+            <!-- Modern Contact Section -->
+            <section id="contact" class="pt-5 mt-5">
+                <h2 class="text-center text-white fw-bold mb-5">Book Your Next Journey</h2>
+                <div class="contact-box row g-0 shadow-lg rounded-4 overflow-hidden border border-white border-opacity-10">
+                    <div class="col-lg-5 contact-info-panel p-5 d-flex flex-column justify-content-center">
+                        <h3 class="fw-bold mb-4">Deep Patel</h3>
+                        <p class="mb-5 opacity-90">All India Permit luxury travel services. Experience comfort like never before.</p>
+                        
+                        <div class="space-y-4">
+                            <div class="d-flex align-items-center mb-4 floating-icon">
+                                <div class="bg-white rounded-circle me-3" style="width: 55px; height: 55px; display:flex; align-items:center; justify-content:center;">
+                                    <img src="./uploads/deep.png" alt="Owner" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                                </div>
+                                <div>
+                                    <p class="mb-0 small opacity-75 text-white">Call/WhatsApp</p>
+                                    <h5 class="mb-0 fw-bold text-white">+91 8140258451</h5>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex align-items-center mb-4">
+                                <div class="bg-white rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 55px; height: 55px;">
+                                    <i class="fa fa-envelope fs-4" style="color: var(--brand-orange)"></i>
+									<img src="./uploads/deep.png" alt="Owner" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                                </div>
+                                <div>
+                                    <p class="mb-0 small opacity-75 text-white">Official Email</p>
+                                    <h5 class="mb-0 fw-bold text-white">deepatel2599@gmail.com</h5>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <label class="form-label small fw-bold">Contact Number</label>
-                            <input type="tel" id="wa_phone" class="form-control border-0 bg-light py-3" placeholder="Your mobile number" required>
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label small fw-bold">Where do you want to go?</label>
-                            <input type="text" id="wa_subject" class="form-control border-0 bg-light py-3" placeholder="e.g. Navsari to Manali, Shimla or anywhere in India" required>
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label small fw-bold">Trip Details</label>
-                            <textarea id="wa_message" class="form-control border-0 bg-light" rows="4" placeholder="Mention travel date, number of people..."></textarea>
-                        </div>
-                        <div class="col-12 mt-4">
-                            <button type="button" onclick="sendToWhatsApp()" class="btn btn-brand w-100 py-3 fw-bold text-uppercase shadow">
-                                <i class="fab fa-whatsapp me-2"></i> Inquiry on WhatsApp
-                            </button>
-                        </div>
-                    </form>
+                    </div>
+
+                    <div class="col-lg-7 p-5 bg-white bg-opacity-10" style="backdrop-filter: blur(20px);">
+                        <h4 class="fw-bold text-white mb-4">Inquiry Form</h4>
+                        <form id="whatsapp-form" class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-white">Name</label>
+                                <input type="text" id="wa_name" class="form-control glass-input py-3" placeholder="Enter name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-white">Mobile</label>
+                                <input type="tel" id="wa_phone" class="form-control glass-input py-3" placeholder="Number" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label small fw-bold text-white">Destination</label>
+                                <input type="text" id="wa_subject" class="form-control glass-input py-3" placeholder="Where to?" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label small fw-bold text-white">Message</label>
+                                <textarea id="wa_message" class="form-control glass-input" rows="4" placeholder="Date, Passengers, etc."></textarea>
+                            </div>
+                            <div class="col-12 mt-4">
+                                <button type="button" onclick="sendToWhatsApp()" class="btn btn-brand w-100 py-3 fw-bold text-uppercase shadow-lg">
+                                    <i class="fab fa-whatsapp me-2"></i> Get Quote via WhatsApp
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
+            </section>
         </div>
-    </section>
+    </div>
 
     <footer>
         <div class="container">
             <div class="row g-5">
                 <div class="col-lg-4 text-center text-lg-start">
                     <h4 class="text-white mb-4">SHIV SHAKTI TOURS</h4>
-                    <p>Providing premium travel experiences with a focus on safety, comfort, and customer satisfaction.</p>
-                    <div class="mt-4 d-flex align-items-center justify-content-center justify-content-lg-start">
-                        <img src="./uploads/deep.png" alt="Deep Patel" class="rounded-circle me-3 border border-warning" style="width: 50px; height: 50px; object-fit: cover;">
-                        <div class="social-links d-flex gap-2">
-                            <a href="https://www.facebook.com/search/top/?q=Deep%20Patel" target="_blank" class="btn btn-outline-light btn-sm d-flex align-items-center gap-2 px-3" title="Facebook">
-                                <i class="fab fa-facebook-f"></i> <span class="d-none d-md-inline small">Facebook</span>
-                            </a>
-                            <a href="https://www.instagram.com/_deep._.25" target="_blank" class="btn btn-outline-light btn-sm d-flex align-items-center gap-2 px-3" title="Instagram">
-                                <i class="fab fa-instagram"></i> <span class="d-none d-md-inline small">Instagram</span>
-                            </a>
-                            <a href="https://wa.me/918140258451" target="_blank" class="btn btn-outline-light btn-sm d-flex align-items-center gap-2 px-3" title="WhatsApp">
-                                <i class="fab fa-whatsapp"></i> <span class="d-none d-md-inline small">WhatsApp</span>
-                            </a>
-                        </div>
-                    </div>
+                    <p>Providing premium travel experiences with a focus on safety, comfort, and 24/7 reliability.</p>
                 </div>
-                <div class="col-lg-2 links">
-                    <h5>Quick Links</h5>
+                <div class="col-lg-4 links">
+                    <h5>Navigation</h5>
                     <a href="#hero">Home</a>
                     <a href="#rides">Completed Rides</a>
+                    <a href="#reviews">Reviews</a>
                     <a href="#contact">Contact Us</a>
                 </div>
-                <div class="col-lg-3 links">
-                    <h5>Services</h5>
-                    <a href="#">Intercity Travels</a>
-                    <a href="#">Local Gujarat Tours</a>
-                    <a href="#">Wedding Car Rentals</a>
-                    <a href="#">Airport Drop/Pickup</a>
-                </div>
-                <div class="col-lg-3">
-                    <h5>Working Hours</h5>
+                <div class="col-lg-4">
+                    <h5>Operating Hours</h5>
                     <p class="mb-1">Mon - Sun: 24/7 Available</p>
-                    <p class="small text-warning">Specializing in Night Travel Safety</p>
+                    <p class="small text-warning"><i class="fa fa-shield-alt me-1"></i> Night Travel Security Experts</p>
                 </div>
             </div>
             <hr class="mt-5 mb-4" style="border-color: #1a2a3a;">
             <div class="text-center small">
-                &copy; 2026 Shiv Shakti Tour and Travels. All Rights Reserved | Designed for Deep Patel.
+                &copy; 2026 Shiv Shakti Tour and Travels. | Designed for Deep Patel.
             </div>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Interactive Filtering Logic
+        function filterRides(category) {
+            const items = document.querySelectorAll('.ride-item');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            items.forEach(item => {
+                item.style.opacity = '0';
+                item.style.transform = 'scale(0.9)';
+                
+                setTimeout(() => {
+                    if (category === 'all' || item.classList.contains(category)) {
+                        item.style.display = 'block';
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'scale(1)';
+                        }, 50);
+                    } else {
+                        item.style.display = 'none';
+                    }
+                }, 300);
+            });
+        }
+
+        // WhatsApp Messaging
         function sendToWhatsApp() {
             const phoneNumber = "918140258451";
             const name = document.getElementById('wa_name').value;
@@ -496,20 +528,66 @@
             const message = document.getElementById('wa_message').value;
 
             if (!name || !userPhone || !destination) {
-                alert("Please fill in your Name, Phone, and Destination.");
+                alert("Please fill in basic details first.");
                 return;
             }
 
-            const finalMessage = `*SHIV SHAKTI TOURS - ALL INDIA INQUIRY*%0A` +
-                `----------------------------%0A` +
-                `*Customer:* ${name}%0A` +
-                `*Phone:* ${userPhone}%0A` +
-                `*Destination:* ${destination}%0A` +
-                `*Details:* ${message}%0A` +
-                `----------------------------%0A` +
-                `Please provide the best quote for this trip.`;
-
+            const finalMessage = `*SHIV SHAKTI TOURS - NEW INQUIRY*%0A----------------------------%0A*Name:* ${name}%0A*Phone:* ${userPhone}%0A*Trip:* ${destination}%0A*Details:* ${message}`;
             window.open(`https://wa.me/${phoneNumber}?text=${finalMessage}`, '_blank').focus();
+        }
+
+        // Dynamic Review System
+        document.addEventListener('DOMContentLoaded', () => {
+            displayReviews();
+            document.getElementById('review-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('rev_name').value;
+                const rating = document.getElementById('rev_rating').value;
+                const text = document.getElementById('rev_text').value;
+                const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+
+                const newReview = {
+                    name, rating: parseInt(rating), text, initials,
+                    date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
+                };
+
+                let reviews = JSON.parse(localStorage.getItem('shivShaktiReviews')) || [];
+                reviews.unshift(newReview);
+                localStorage.setItem('shivShaktiReviews', JSON.stringify(reviews));
+                this.reset();
+                displayReviews();
+            });
+        });
+
+        function displayReviews() {
+            const container = document.getElementById('reviews-container');
+            let reviews = JSON.parse(localStorage.getItem('shivShaktiReviews')) || [];
+            
+            if (reviews.length === 0) {
+                container.innerHTML = `<div class="col-12 text-center py-5 text-white-50 glass-card">No reviews yet. Share your journey with us!</div>`;
+                return;
+            }
+
+            container.innerHTML = reviews.map(rev => `
+                <div class="col-md-6">
+                    <div class="card glass-card h-100 p-4 border-0">
+                        <div class="text-warning mb-3">
+                            ${Array(rev.rating).fill('<i class="fa fa-star"></i>').join('')}
+                        </div>
+                        <p class="opacity-75 fst-italic">"${rev.text}"</p>
+                        <div class="d-flex align-items-center mt-auto pt-3">
+                            <div class="rounded-circle me-3 text-white d-flex align-items-center justify-content-center" 
+                                 style="width: 45px; height: 45px; background-color: var(--brand-orange); font-weight: bold; border: 2px solid rgba(255,255,255,0.2);">
+                                 ${rev.initials}
+                            </div>
+                            <div>
+                                <h6 class="mb-0 fw-bold">${rev.name}</h6>
+                                <small class="text-white-50">${rev.date}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
         }
     </script>
 </body>
